@@ -1,0 +1,65 @@
+enable
+configure terminal
+
+
+*etherchannel configuration*
+
+vlan 10
+int range Ethernet0/0-1
+channel-group 1 mode desirable
+
+int port-channel 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 10
+no shutdown
+
+int range Ethernet0/2-3
+channel-group 3 mode desirable
+
+int port-channel 3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 10
+no shutdown
+
+interface range Ethernet1/0-1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 10
+no shutdown
+
+
+
+*Assigning IP to VLAN*
+
+interface Vlan10
+ip address 192.168.2.1 255.255.255.128
+ip helper-address 192.168.5.132
+ip ospf 1 area 1
+no shutdown
+
+*HOSTNAME Configuration*
+
+hostname vlan10MainSwitch
+
+
+*SSH Configuration*
+
+username yanfei priv 15 secret G#\W125x=p3o9
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+
+*Console Login Configuration*
+Line console 0
+Logging synchronous
+Login local
+Enable secret G#\W125x=p3o9
+
+do wr mem
+

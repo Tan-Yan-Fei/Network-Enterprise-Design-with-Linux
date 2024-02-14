@@ -1,0 +1,68 @@
+enable
+configure terminal
+
+interface Ethernet0/0
+ip address 192.168.10.18 255.255.255.252
+no shutdown
+
+interface Ethernet0/1
+ip address 192.168.10.33 255.255.255.252
+no shutdown
+
+interface Ethernet0/2
+ip address 192.168.10.37 255.255.255.252
+no shutdown
+
+interface Ethernet0/3
+ip address 192.168.10.30 255.255.255.252
+no shutdown
+
+interface Ethernet1/0
+ip address 192.168.10.6 255.255.255.252
+no shutdown
+
+interface Ethernet1/1
+ip address 192.168.10.45 255.255.255.252
+no shutdown
+
+interface Ethernet1/2.30
+encapsulation dot1q 30
+ip address 192.168.3.125 255.255.255.128
+int Ethernet1/2
+no shutdown
+
+interface Ethernet1/3.40
+encapsulation dot1q 40
+ip address 192.168.3.253 255.255.255.128
+int Ethernet1/3
+no shutdown
+
+
+hostname 2ndFloorMainRouter
+username yanfei priv 15 secret G#\W125x=p3o9
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+
+
+router ospf 1
+network 192.168.10.16 0.0.0.3 area 0
+network 192.168.10.4 0.0.0.3 area 0
+network 192.168.10.36 0.0.0.3 area 0
+network 192.168.10.32 0.0.0.3 area 0
+network 192.168.10.44 0.0.0.3 area 0
+network 192.168.10.28 0.0.0.3 area 0
+network 192.168.3.0 0.0.0.127 area 3
+network 192.168.3.128 0.0.0.127 area 4
+Line console 0
+Logging synchronous
+Login local
+Enable secret G#\W125x=p3o9
+
+do wr mem
+
+

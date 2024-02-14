@@ -1,0 +1,62 @@
+enable
+configure terminal
+
+interface Ethernet0/0
+ip address 192.168.5.132 255.255.255.128
+no shutdown
+
+
+ip dhcp pool VLAN10
+network 192.168.2.0 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.2.1
+
+ip dhcp pool VLAN20
+network 192.168.2.128 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.2.129
+
+ip dhcp pool VLAN30
+network 192.168.3.0 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.3.1
+
+ip dhcp pool VLAN40
+network 192.168.3.128 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.3.129
+
+ip dhcp pool VLAN50
+network 192.168.4.0 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.4.1
+
+ip dhcp pool VLAN60
+network 192.168.4.128 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.4.129
+
+ip dhcp pool VLAN70
+network 192.168.5.0 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.5.1
+
+ip dhcp pool VLAN80
+network 192.168.5.128 255.255.255.128
+dns-server 8.8.8.8
+default-router 192.168.5.129
+
+hostname DHCPserver
+username yanfei priv 15 secret G#\W125x=p3o9
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+
+
+router ospf 1
+network 192.168.5.128 0.0.0.127 area 8
+do wr mem

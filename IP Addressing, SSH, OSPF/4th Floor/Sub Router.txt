@@ -1,0 +1,46 @@
+enable
+configure terminal
+
+interface Ethernet0/0
+ip address 192.168.10.70 255.255.255.252
+no shutdown
+
+interface Ethernet0/1.70
+encapsulation dot1q 70
+ip address 192.168.5.126 255.255.255.128
+int Ethernet0/1
+no shutdown
+
+interface Ethernet0/2.80
+encapsulation dot1q 80
+ip address 192.168.5.254 255.255.255.128
+int Ethernet0/2
+no shutdown
+
+interface Ethernet0/3
+ip address 192.168.10.62 255.255.255.252
+no shutdown
+
+hostname 4thFloorSubRouter
+username yanfei priv 15 secret G#\W125x=p3o9
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+
+router ospf 1
+network 192.168.5.0 0.0.0.127 area 7
+network 192.168.5.128 0.0.0.127 area 8
+network 192.168.10.60 0.0.0.3 area 0
+network 192.168.10.68 0.0.0.3 area 0
+Line console 0
+Logging synchronous
+Login local
+Enable secret G#\W125x=p3o9
+
+do wr mem
+
+

@@ -1,0 +1,55 @@
+enable
+configure terminal
+
+vlan 60
+interface range eth1/0-3, eth2/0-3, eth3/0-3, eth4/0-3, eth5/0-3, eth6/0-3, eth7/0-3
+switchport access vlan 60
+switchport mode access
+no shutdown
+
+interface range eth8/0-3, eth9/0-3, eth10/0-3, eth11/0-3, eth12/0-3, eth13/0-3, eth14/0-3, eth15/0-3
+switchport access vlan 60
+switchport mode access
+no shutdown
+
+
+int range Ethernet0/0-1
+channel-group 1 mode desirable
+
+int port-channel 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 60
+no shutdown
+
+int range Ethernet0/2-3
+channel-group 2 mode desirable
+
+int port-channel 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 60
+no shutdown
+
+interface Vlan60
+ip address 192.168.4.130 255.255.255.128
+ip ospf 1 area 6
+no shutdown
+
+hostname vlan60SwitchA
+username yanfei priv 15 secret G#\W125x=p3o9
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+Line console 0
+Logging synchronous
+Login local
+Enable secret G#\W125x=p3o9
+
+do wr mem
+
+
