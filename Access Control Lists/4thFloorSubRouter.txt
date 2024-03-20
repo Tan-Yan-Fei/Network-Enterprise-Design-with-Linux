@@ -1,0 +1,10 @@
+config term
+access-list 101 deny tcp 192.168.5.0 0.0.0.127 any eq 21
+access-list 101 deny tcp 192.168.5.0 0.0.0.127 any eq 22
+access-list 101 deny tcp 192.168.5.0 0.0.0.127 any eq 23
+access-list 101 permit ip any any
+int e0/1.70
+ip access-group 101 in
+int range e0/0, e0/3
+ip access-group 101 out
+exit
